@@ -1,1 +1,29 @@
-{"version":1}
+{
+    "version": 1,
+    "all_bricks": {
+        "4": {
+            "submit_time": [
+                1701931573
+            ],
+            "type": 2
+        },
+        "5": {
+            "submit_time": [
+                1701943676
+            ],
+            "type": 2
+        },
+        "70": {
+            "submit_time": [
+                1702608197
+            ],
+            "type": 2
+        },
+        "198": {
+            "submit_time": [
+                1702609337
+            ],
+            "type": 2
+        }
+    }
+}
