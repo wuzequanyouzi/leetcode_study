@@ -16,23 +16,28 @@
  */
 var longestConsecutive = function(nums) {
   const map = {};
-  nums.forEach(item => {
-    map[item] = true;
-  });
-  const result = Object.keys(map).map((item) => parseInt(item)).sort((a,b) => a-b);
-  let max = 0;
-  let target = null;
-  let count = 1;
-  result.forEach(item => {
-    if (target !== null && item - target === 1) {
-      count += 1;
-    } else if (target !== null && item - target > 1) {
-      count = 1;
+  let maxCount = 0;
+  for (let index = 0; index < nums.length; index++) {
+    const num = nums[index];
+    if (!map[num]) {
+      const left = map[num - 1] || 0;
+      const right = map[num + 1] || 0;
+      const curr = left + 1 + right;
+      maxCount = Math.max(curr, maxCount);
+      // 当前数字最长连续数
+      map[num] = curr;
+      // 更新当前数字的连续字符最左端的数字最长连续数
+      map[num - left] = curr;
+      // 更新当前数字的连续字符最右端的数字最长连续数
+      map[num + right] = curr;
+      // 为什么要这样做：
+      // 因为已被记录的连续数字不会再进入计算最长连续串的逻辑中，
+      // 每一次进入计算的数，都只会是某个连续序列的左端或右端未记录的数
+      // 所以只需要更新某个连续序列的左端数和右端数
+      // 这样可以就可以保证当前处理的数可满足left + 1 + right;
     }
-    max = Math.max(max, count);
-    target = item;
-  });
-  return max;
+  }
+  return maxCount;
 };
 
 // @lc code=end
