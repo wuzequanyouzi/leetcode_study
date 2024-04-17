@@ -17,6 +17,20 @@
  * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
  * 
  * 
+ * 万能公式
+    let left = 0;
+    for (let index = 0; index < s.length; index++) {
+      const char = s[index];
+      // 记录char的数据， char是移入窗口的字符
+      
+      while( 满足缩小窗口的条件 ) {
+        // 移出窗口的字符
+        let _char = s[left];
+        left++;
+
+        // 处理_char记录的数据
+      }
+    }
  * 
  * 示例 1:
  * 
@@ -70,16 +84,30 @@ var lengthOfLongestSubstring = function(s) {
   // 所以c(包括c)之前的字符都不需要考虑以它作起始位置了
   let maxLength = 0; // 最长无重复字符串的长度
   let map = {};
+  // for (let index = 0; index < s.length; index++) {
+  //   const char = s[index];
+
+  //   if (map[char] !== undefined) {
+  //     left = Math.max(left, map[char] + 1); // 为什么要取最大值呢？因为滑动窗口只会往右滑动
+  //   }
+    
+  //   map[char] = index;
+  //   maxLength = Math.max(maxLength, index - left + 1);
+  // }
+
   for (let index = 0; index < s.length; index++) {
     const char = s[index];
+    map[char] = (map[char] || 0) + 1;
 
-    if (map[char] !== undefined) {
-      left = Math.max(left, map[char] + 1); // 为什么要取最大值呢？因为滑动窗口只会往右滑动
+    while (map[char] > 1) {
+      let _char = s[left];
+      map[_char]--;
+      left++;
     }
-    
-    map[char] = index;
     maxLength = Math.max(maxLength, index - left + 1);
+    
   }
+
   return maxLength;
 };
 // @lc code=end
